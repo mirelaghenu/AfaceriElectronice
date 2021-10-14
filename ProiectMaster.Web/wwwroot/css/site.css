@@ -123,10 +123,8 @@ body {
     min-width: 520px;
 }
 
-.table-hover tbody tr:hover td {
-    background-color: aqua;
-    color: black;
-}
+
+
 
 .tableSelectedRow {
     background-color: #F0E68C !important;
