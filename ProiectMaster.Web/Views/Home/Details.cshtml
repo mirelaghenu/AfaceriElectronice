@@ -1,14 +1,27 @@
 ﻿@model ProductVM
 
 @inject IHttpContextAccessor HttpContextAccessor
-@{ 
-    var route = "/api/CartOperations/Add/{0}";
+@{
+    var route = "https://localhost:44319/api/CartOperations/Add/{0}";
     route = string.Format(route, Model.Id);
 }
+<script>
+    function callAddToCart(url) {
+        const userAction = async () => {
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+        }
 
+        userAction();
+    }
+</script>
 <h2 class="text-info">Product Details</h2>
 
-<form action="@route" method="post">
+<div>
 
     <div class="p-4 border rounded row">
         <div class="col-8">
@@ -36,14 +49,14 @@
                     <label>Description</label>
                 </div>
                 <div class="col-4">
-                    @Html.TextArea("Description", Model.Description, new { @class = "form-control", @readonly="readonly" })
+                    @Html.TextArea("Description", Model.Description, new { @class = "form-control", @readonly = "readonly" })
                 </div>
             </div>
 
             <div class="form-group row">
                 <div class="col-4"></div>
                 <div class="col-8">
-                        <button type="submit" value="Add to bag" class="btn btn-primary form-control">Add to Bag</button>
+                    <button onclick="callAddToCart('@route')" value="Add to bag" class="btn btn-primary form-control">Add to Bag</button>
                 </div>
             </div>
 
@@ -58,10 +71,10 @@
         </div>
     </div>
 
-    <br/>
+    <br />
 
     <div class="form-group">
         <a asp-action="Index" class="btn btn-success">Back to List</a>
     </div>
 
-</form>
+</div>

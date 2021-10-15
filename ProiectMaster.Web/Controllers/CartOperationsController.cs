@@ -24,7 +24,7 @@ namespace ProiectMaster.Web.Controllers
         public IActionResult Add(int id, int quantity = 1)
         {
             _cartService.AddToCart(1, id, quantity);
-            return RedirectToAction("Details", "", id);
+            return Ok();
         }
     }
 }
