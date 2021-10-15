@@ -1,8 +1,7 @@
 ﻿@inject IHttpContextAccessor HttpContextAccessor
 
 @{ 
-    var shoppingList = HttpContextAccessor.HttpContext.Session.Get<List<int>>(SessionHelper.ShoppingCart);
-    var shoppingCount = shoppingList == null ? 0 : shoppingList.Count;
+    var shoppingCount = HttpContextAccessor.HttpContext.Session.Get<int>(SessionHelper.ShoppingCart);
 }
 
 

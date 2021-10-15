@@ -17,18 +17,21 @@
                 <tr>
                     <th hidden>Cart</th>
                     <th class="text-success">My bag</th>
+                    <th class="text-success">Price</th>
+                    <th class="text-success">Quantity</th>
                 </tr>
             </thead>
 
             <tbody>
                 @foreach (var item in Model.ProductDTOs)
                 {
-                    <tr id="@item.Id">
-                        <td hidden>@item.Id</td>
-                        <td>@item.Name</td>
-                        <td>@item.Price</td>
-                    </tr>
-                    total += item.Price;
+                <tr id="@item.Id">
+                    <td hidden>@item.Id</td>
+                    <td>@item.Name</td>
+                    <td>@item.Price</td>
+                    <td>@item.Quantity</td>
+                </tr>
+                    total += item.Price * item.Quantity;
                 }
                 <tr>
                     <td><b>Total</b></td>

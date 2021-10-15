@@ -24,7 +24,19 @@ namespace ProiectMaster.Services
                 Quantity = quantity
             };
 
-            repository.AddCartsProduct(cartsProduct);
+            var cart = repository.GetCartsProducts(userId);
+
+            var existingCart = cart.FirstOrDefault(x => x.CartId == userId && x.ProductId == productId);
+            
+            if(existingCart != null)
+            {
+                existingCart.Quantity += quantity;
+                repository.EditCartsProduct(existingCart);
+            }
+            else
+            {
+                repository.AddCartsProduct(cartsProduct);
+            }
         }
 
         public void RemoveFromCart(int userId, int productId, int quantity)

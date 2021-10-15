@@ -7,17 +7,31 @@ namespace ProiectMaster.Web.Controllers
     public class HomeController : Controller
     {
         private readonly IProductService productService;
+        private readonly ICartService _cartService;
 
         public HomeController(IProductService productService, ICartService cartService)
         {
             this.productService = productService;
+            _cartService = cartService;
         }
 
         [HttpGet]
         public IActionResult Index()
         {
             var products = productService.GetAllProducts();
+            PopulateCartNumber();
             return View(products);
+        }
+
+        private void PopulateCartNumber()
+        {
+            var cart = _cartService.GetCart(1);
+            var sum = 0;
+            foreach (var product in cart.ProductIds)
+            {
+                sum += product.Quantity;
+            }
+            HttpContext.Session.Set(SessionHelper.ShoppingCart, sum);
         }
 
         [HttpGet]
@@ -26,23 +40,6 @@ namespace ProiectMaster.Web.Controllers
         {
             var product = productService.GetProduct(id);
             return View(product);
-        }
-
-        [HttpPost]
-        [Route("Remove/{id}")]
-        public IActionResult Remove(int id)
-        {
-            var shopList = HttpContext.Session.Get<List<int>>(SessionHelper.ShoppingCart);
-
-            if (shopList == null)
-                return RedirectToAction("Index", "Home", productService.GetAllProducts());
-
-            if (shopList.Contains(id))
-                shopList.Remove(id);
-
-            HttpContext.Session.Set(SessionHelper.ShoppingCart, shopList);
-
-            return RedirectToAction("Index", "Home", productService.GetAllProducts());
         }
     }
 }
