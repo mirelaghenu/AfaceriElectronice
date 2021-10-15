@@ -8,7 +8,7 @@ namespace ProiectMaster.Web.Controllers
     {
         private readonly IProductService productService;
 
-        public HomeController(IProductService productService)
+        public HomeController(IProductService productService, ICartService cartService)
         {
             this.productService = productService;
         }
@@ -26,23 +26,6 @@ namespace ProiectMaster.Web.Controllers
         {
             var product = productService.GetProduct(id);
             return View(product);
-        }
-
-        [HttpPost]
-        [Route("Add/{id}")]
-        public IActionResult Add(int id)
-        {
-            var shopList = HttpContext.Session.Get<List<int>>(SessionHelper.ShoppingCart);
-
-            if (shopList == null)
-                shopList = new List<int>();
-
-            if (!shopList.Contains(id))
-                shopList.Add(id);
-
-            HttpContext.Session.Set(SessionHelper.ShoppingCart, shopList);
-
-            return RedirectToAction("Index", "Home", productService.GetAllProducts());
         }
 
         [HttpPost]

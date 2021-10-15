@@ -7,7 +7,7 @@
     if (lstCart != null && lstCart.Contains(Model.Id))
         isInBag = true;
 
-    var route = isInBag ? "/Remove/{0}" : "/Add/{0}";
+    var route = "/api/CartOperations/Add/{0}";
     route = string.Format(route, Model.Id);
 }
 
