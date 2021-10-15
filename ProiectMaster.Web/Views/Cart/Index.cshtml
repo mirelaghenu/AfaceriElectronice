@@ -30,6 +30,9 @@
                     <td>@item.Name</td>
                     <td>@item.Price</td>
                     <td>@item.Quantity</td>
+                    <td>
+                        <input type="button" class="btn btn-danger" value="Remove" onclick="location.href='@Url.Action("Remove", "Cart", new { id = item.Id } )'"/>
+                    </td>
                 </tr>
                     total += item.Price * item.Quantity;
                 }

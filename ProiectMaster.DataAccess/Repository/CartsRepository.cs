@@ -21,19 +21,28 @@ namespace ProiectMaster.DataAccess.Repository
 
         public void DeleteCartsProduct(CartsProduct cartsProduct)
         {
-            _db.Remove(cartsProduct);
+            var product = GetProductToProcess(cartsProduct);
+            _db.Remove(product);
             _db.SaveChanges();
         }
 
         public void EditCartsProduct(CartsProduct cartsProduct)
         {
-            _db.Update(cartsProduct);
+            var product = GetProductToProcess(cartsProduct);
+            product.Quantity = cartsProduct.Quantity;
+
+            _db.Update(product);
             _db.SaveChanges();
         }
 
         public IEnumerable<CartsProduct> GetCartsProducts(int cartId)
         {
             return _db.Set<CartsProduct>().AsEnumerable();
+        }
+
+        private CartsProduct GetProductToProcess(CartsProduct cartsProduct)
+        {
+            return GetCartsProducts(cartsProduct.CartId).Where(x => x.ProductId == cartsProduct.ProductId).First();
         }
     }
 }

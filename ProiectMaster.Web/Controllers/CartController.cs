@@ -42,5 +42,14 @@ namespace ProiectMaster.Web.Controllers
 
             return View(cartVM);
         }
+
+        [HttpGet]
+        [Route("Remove/{id}")]
+        public IActionResult Remove(int id)
+        {
+            _cartService.RemoveFromCart(1, id, 1);
+
+            return RedirectToAction("Index");
+        }
     }
 }

@@ -26,11 +26,16 @@ namespace ProiectMaster.Web.Controllers
         private void PopulateCartNumber()
         {
             var cart = _cartService.GetCart(1);
+
             var sum = 0;
-            foreach (var product in cart.ProductIds)
+            if (cart != null)
             {
-                sum += product.Quantity;
+                foreach (var product in cart.ProductIds)
+                {
+                    sum += product.Quantity;
+                }
             }
+
             HttpContext.Session.Set(SessionHelper.ShoppingCart, sum);
         }
 
