@@ -1,4 +1,4 @@
-﻿@model IEnumerable<ProductVM>
+﻿@model CartVM
 
 @{
     ViewData["Title"] = "Checkout";
@@ -6,7 +6,7 @@
 
 @{
     decimal total = 0;
-    if (!Model.Any())
+    if (!Model.ProductDTOs.Any())
     {
         <div><h3 class="text-primary">Nu exista niciun produs in cos</h3></div>
     }
@@ -21,7 +21,7 @@
             </thead>
 
             <tbody>
-                @foreach (var item in Model)
+                @foreach (var item in Model.ProductDTOs)
                 {
                     <tr id="@item.Id">
                         <td hidden>@item.Id</td>

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ProiectMaster.Models.Entites.Many;
+using System;
 using System.Collections.Generic;
 
 #nullable disable
@@ -25,6 +26,7 @@ namespace ProiectMaster.Models.Entites
         public virtual ProductType ProductType { get; set; }
         public virtual ICollection<Feedback> Feedbacks { get; set; }
         public virtual ICollection<OrdersProduct> OrdersProducts { get; set; }
+        public virtual ICollection<CartsProduct> CartsProducts { get; set; }
         public virtual ICollection<ProductsSpecialTag> ProductsSpecialTags { get; set; }
     }
 }

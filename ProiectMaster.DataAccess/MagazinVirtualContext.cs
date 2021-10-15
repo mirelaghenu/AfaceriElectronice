@@ -1,5 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ProiectMaster.Models.Entites;
+using ProiectMaster.Models.Entites.Many;
+using ProiectMaster.Models.Entites.Single;
 
 namespace ProiectMaster.DataAccess
 {
@@ -18,7 +20,10 @@ namespace ProiectMaster.DataAccess
         public virtual DbSet<ProductsSpecialTag> ProductsSpecialTags { get; set; }
         public virtual DbSet<Role> Roles { get; set; }
         public virtual DbSet<SpecialTag> SpecialTags { get; set; }
-        public virtual DbSet<User> Users { get; set; }       
+        public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<Cart> Carts { get; set; }
+        public virtual DbSet<CartsProduct> CartsProducts { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -67,6 +72,24 @@ namespace ProiectMaster.DataAccess
                     .HasMaxLength(256);
 
                 entity.Property(e => e.OrderDate).HasColumnType("datetime");
+            });
+
+            modelBuilder.Entity<Cart>();
+
+            modelBuilder.Entity<CartsProduct>(entity =>
+            {
+                entity.HasKey(e => new { e.ProductId, e.CartId });
+
+                entity.HasOne(d => d.Cart)
+                    .WithMany(p => p.CartsProducts)
+                    .HasForeignKey(d => d.CartId)
+                    .HasConstraintName("FK_OrdersProducts_Orders");
+
+                entity.HasOne(d => d.Product)
+                    .WithMany(p => p.CartsProducts)
+                    .HasForeignKey(d => d.ProductId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_OrdersProducts_Products");
             });
 
             modelBuilder.Entity<OrdersProduct>(entity =>

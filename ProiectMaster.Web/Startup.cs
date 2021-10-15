@@ -51,6 +51,7 @@ namespace ProiectMaster.Web
 
             services.AddScoped<IProductTypeService, ProductTypeService>();
             services.AddScoped<IProductService, ProductService>();
+            services.AddScoped<ICartService, CartService>();
 
             #endregion Services
 
@@ -58,6 +59,7 @@ namespace ProiectMaster.Web
 
             services.AddScoped<IRepository<ProductType, int>, Repository<ProductType, int>>();
             services.AddScoped<IRepository<Product, int>, Repository<Product, int>>();
+            services.AddScoped<ICartRepository, CartsRepository>();
 
             #endregion Repository
         }
