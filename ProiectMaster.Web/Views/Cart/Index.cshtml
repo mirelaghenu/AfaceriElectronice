@@ -1,5 +1,41 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model IEnumerable<ProductVM>
+
 @{
+    ViewData["Title"] = "Checkout";
+}
+
+@{
+    decimal total = 0;
+    if (!Model.Any())
+    {
+        <div><h3 class="text-primary">Nu exista niciun produs in cos</h3></div>
+    }
+    else
+    {
+        <table id="table" class="table table-hover table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th hidden>Cart</th>
+                    <th class="text-success">My bag</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr id="@item.Id">
+                        <td hidden>@item.Id</td>
+                        <td>@item.Name</td>
+                        <td>@item.Price</td>
+                    </tr>
+                    total += item.Price;
+                }
+                <tr>
+                    <td><b>Total</b></td>
+                    <td><b>@total</b></td>
+                </tr>
+            </tbody>
+
+        </table>
+    }
 }
